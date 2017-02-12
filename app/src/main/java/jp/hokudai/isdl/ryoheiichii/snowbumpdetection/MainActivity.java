@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -20,11 +21,13 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity { //MainActivityでは主にパーミッション関係の処理を行う
 
+
     private final int REQUEST_PERMISSION = 10; //パーミッションのリクエストコード(任意の番号(0以上が望ましい))
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState); //スーパークラス呼び出し
+        super.onCreate(savedInstanceState); //スーパークラス
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //縦画面固定
         setContentView(R.layout.activity_main); //画面描画
         Log.d("MainActivity","OnCreate Seq Start."); //システムログ出力
 
@@ -34,8 +37,15 @@ public class MainActivity extends AppCompatActivity { //MainActivityでは主に
             public void onClick(View view) { //変更ボタンが押されたら
                 Intent intent = new Intent();
                 intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                intent.setData(Uri.parse("package:jp.hokudai.isdl.ryoheiichii.snowbumpdetection"));
+                intent.setData(Uri.parse("package:"+ getPackageName() ));
                 startActivity(intent); //Androidの設定画面へ遷移
+            }
+        });
+        Button retrybutton = (Button)findViewById(R.id.retrybutton); //メイン画面での再試行ボタン
+        retrybutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { //再試行ボタンが押されたら
+                checkPermission(); //パーミッションテストを再実行
             }
         });
 

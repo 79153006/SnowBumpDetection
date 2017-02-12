@@ -24,4 +24,22 @@
         android:layout_centerHorizontal="true"
         android:text="@string/jp_button_changepermit"
         android:id="@+id/permitsetbutton" />
+
+    <TextView
+        android:text="@string/jp_message_infofretry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/permitsetbutton"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/inforetry" />
+
+    <Button
+        android:text="@string/jp_button_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inforetry"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/retrybutton" />
+
+
 </RelativeLayout>

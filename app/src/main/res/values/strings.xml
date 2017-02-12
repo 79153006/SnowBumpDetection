@@ -6,4 +6,6 @@
     <string name="jp_dialog_geopermissionwarn">位置情報の取得が端末上で禁止されています。許可をするには設定-アプリ-SnowBumpDetectionから位置情報を許可してください。 </string>
     <string name="jp_message_howtopermit">アプリの利用には、位置情報と加速度センサーの利用許可が必要です。Android設定画面で許可をするには下部のボタンをタップしてください。</string>
     <string name="jp_button_changepermit">設定の変更（Android設定）</string>
+    <string name="jp_message_infofretry">位置情報および加速度センサーの取得を許可したら、再試行ボタンをタップしてください。</string>
+    <string name="jp_button_retry">再試行</string>
 </resources>
