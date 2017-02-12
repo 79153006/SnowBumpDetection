@@ -11,7 +11,17 @@
     tools:context="jp.hokudai.isdl.ryoheiichii.snowbumpdetection.MainActivity">
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/jp_message_howtopermit"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/howtopermit" />
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_below="@+id/howtopermit"
+        android:layout_centerHorizontal="true"
+        android:text="@string/jp_button_changepermit"
+        android:id="@+id/permitsetbutton" />
 </RelativeLayout>
