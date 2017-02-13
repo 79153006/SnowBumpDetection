@@ -2,6 +2,7 @@ package jp.hokudai.isdl.ryoheiichii.snowbumpdetection;
 
 import android.*;
 import android.Manifest;
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -16,6 +17,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +37,8 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.nio.BufferUnderflowException;
 import java.util.List;
+
+import static android.content.Context.SENSOR_SERVICE;
 
 /**
  * Created by Ryohei Ichii on 2017/02/12.
@@ -65,7 +71,7 @@ public class SnowBumpActivity extends FragmentActivity implements SensorEventLis
         locationRequest.setInterval(1000); //更新頻度を1秒に設定
         locationRequest.setFastestInterval(16); //最高速更新頻度を16ミリ秒に設定
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googlemap);
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.googlemap);
 
         //フラグメントとの紐付け
         mapFragment.getMapAsync(this); //Async
