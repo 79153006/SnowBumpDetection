@@ -19,16 +19,14 @@
         </activity>
         <activity android:name=".SnowBumpActivity">
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDIfKfzt8Nt4T1e0hkM9oYSpwTlL_59DH4"/>
     </application>
-
-    <meta-data
-        android:name="com.google.android.gms.version"
-        android:value="@integer/google_play_services_version" />
-
-    <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyDIfKfzt8Nt4T1e0hkM9oYSpwTlL_59DH4"/>
-
-
 
 </manifest>

@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/activity_snowbump">
+    android:id="@+id/activity_snowbump"
+    tools:context="jp.hokudai.isdl.ryoheiichii.snowbumpdetection.SnowBumpActivity">
 
     <fragment
-        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mymap"
+        android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="0px"
-        class="com.google.android.gms.maps.SupportMapFragment"
-        android:id="@+id/googlemap"
         android:layout_weight="4"
-        tools:context="jp.hokudai.isdl.ryoheiichii.snowbumpdetection.SnowBumpActivity"
         />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="1"
         android:orientation="vertical"
         >
-
 
         <TextView
         android:text="X"

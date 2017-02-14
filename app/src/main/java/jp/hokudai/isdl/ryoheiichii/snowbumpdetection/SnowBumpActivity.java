@@ -1,25 +1,18 @@
 package jp.hokudai.isdl.ryoheiichii.snowbumpdetection;
 
-import android.*;
 import android.Manifest;
-import android.app.Fragment;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.widget.TextViewCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,13 +25,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.nio.BufferUnderflowException;
 import java.util.List;
-
-import static android.content.Context.SENSOR_SERVICE;
 
 /**
  * Created by Ryohei Ichii on 2017/02/12.
@@ -49,7 +39,11 @@ public class SnowBumpActivity extends FragmentActivity implements SensorEventLis
         com.google.android.gms.location.LocationListener, GoogleMap.OnMyLocationButtonClickListener, LocationSource{
     //加速度センサーとGoogleMapと位置情報のアブストラクトクラスをインプリメント
 
-    SensorManager mSensorManager; //加速度用センサーマネージャ
+    private SensorManager mSensorManager; //加速度用センサーマネージャ
+    private Sensor mAc; //加速度センサー
+    private Sensor mMg; //方位センサー
+    private float[] axis,mg = new float[3]; //センサーデータ
+    private float deg; //方位角
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest locationRequest;
@@ -61,6 +55,7 @@ public class SnowBumpActivity extends FragmentActivity implements SensorEventLis
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState); //スーパークラス
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //縦画面固定
         setContentView(R.layout.activity_snowbump); //画面描画
 
         Log.d("MainActivity","OnCreate Seq Start2."); //システムログ出力
@@ -71,8 +66,10 @@ public class SnowBumpActivity extends FragmentActivity implements SensorEventLis
         locationRequest.setInterval(1000); //更新頻度を1秒に設定
         locationRequest.setFastestInterval(16); //最高速更新頻度を16ミリ秒に設定
 
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.googlemap);
+        mAc = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); //加速度センサーを登録
+        mMg = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD); //地磁気センサーを登録
 
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mymap);
         //フラグメントとの紐付け
         mapFragment.getMapAsync(this); //Async
 
@@ -87,12 +84,21 @@ public class SnowBumpActivity extends FragmentActivity implements SensorEventLis
     @Override
     protected void onResume(){ //Activityがアクティブ(?)になるときの処理
         super.onResume(); //スーパークラス
-        List<Sensor> sensors =
+        List<Sensor> sensors1 =
                 mSensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER); //加速度センサーを取得
-        if(sensors.size()>0) { //センサーを取得できたら
-            mSensorManager.registerListener(this,sensors.get(0),SensorManager.SENSOR_DELAY_FASTEST);
+        if(sensors1.size()>0) { //センサーを取得できたら
+            mSensorManager.registerListener(this,sensors1.get(0),SensorManager.SENSOR_DELAY_FASTEST);
             //端末の最高頻度で加速度を取得するリスナーを取得
         }
+
+        List<Sensor> sensors2 =
+                mSensorManager.getSensorList(Sensor.TYPE_MAGNETIC_FIELD); //地磁気センサーを取得
+        if(sensors2.size()>0) { //センサーを取得できたら
+            mSensorManager.registerListener(this,sensors2.get(0),SensorManager.SENSOR_DELAY_FASTEST);
+            //端末の最高頻度で地磁気を取得するリスナーを取得
+        }
+
+
         //OnResumeでMAPのAPIに接続
         mGoogleApiClient.connect();
     }
@@ -131,7 +137,13 @@ public class SnowBumpActivity extends FragmentActivity implements SensorEventLis
 
             //↓マップの更新
             LatLng newLocation = new LatLng(lat,lng); //LatLngクラスに位置情報を登録
-            mMap.moveCamera((CameraUpdateFactory.newLatLng(newLocation))); //カメラの中心を現在位置に移動
+            CameraPosition.Builder cb = new CameraPosition.Builder(mMap.getCameraPosition());
+            //カメラポジションビルダーの生成
+            cb.bearing(deg); //方位に合わせカメラを回転
+            cb.target(newLocation); //現在地をセット
+            cb.zoom(17); //拡大倍率を17にセット
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cb.build())); //カメラを移動
+
         }
     }
 
@@ -173,20 +185,42 @@ public class SnowBumpActivity extends FragmentActivity implements SensorEventLis
     @Override
     public void onSensorChanged(SensorEvent event){ //加速度センサーの値が変更されたときに読み込まれる
 
-        double ax,ay,az;
+        switch (event.sensor.getType()){ //どのセンサーの情報が更新されたかによって場合分け
+            case Sensor.TYPE_ACCELEROMETER: //加速度センサーなら
+                axis = event.values.clone(); //加速度データをクローン
 
-        ax = event.values[0]; //x軸取得
-        ay = event.values[1]; //y軸取得
-        az = event.values[2]; //z軸取得
+                TextView textx = (TextView)findViewById(R.id.axisX);
+                TextView texty = (TextView)findViewById(R.id.axisY);
+                TextView textz = (TextView)findViewById(R.id.axisZ);
+                //x,y,z軸のTextViewを取得
+                textx.setText(Double.toString(axis[0]));
+                texty.setText(Double.toString(axis[1]));
+                textz.setText(Double.toString(axis[2]));
+                //x,y,z軸の画面表示を更新
+                break;
+            case Sensor.TYPE_MAGNETIC_FIELD: //地磁気センサーなら
+                mg = event.values.clone(); //地磁気データをクローン
 
-        TextView textx = (TextView)findViewById(R.id.axisX);
-        TextView texty = (TextView)findViewById(R.id.axisY);
-        TextView textz = (TextView)findViewById(R.id.axisZ);
-        //x,y,z軸のTextViewを取得
-        textx.setText(Double.toString(ax));
-        texty.setText(Double.toString(ay));
-        textz.setText(Double.toString(az));
-        //x,y,z軸の画面表示を更新
+                //↓地磁気から方位を求める
+                float[] rotate = new float[16]; //傾斜行列
+                float[] inclination = new float[16]; //回転行列
+
+                if(axis!=null) { //加速度よりも地磁気が先に入力された場合のエラーを阻止するために場合分け（加速度がnullだと方位を割り出せない）
+                    SensorManager.getRotationMatrix(rotate, inclination, axis, mg);
+                    //マトリックス
+
+                    // 方向を求める
+                    float[] orientation = new float[3];
+                    SensorManager.getOrientation(rotate, orientation);
+
+                    // デグリー角に変換する
+                    deg = (float) Math.toDegrees(orientation[0]);
+                }
+                else{ //加速度データがnullなら
+                    deg=0; //とりあえず真北を上に
+                }
+        }
+
     }
 
     @Override
