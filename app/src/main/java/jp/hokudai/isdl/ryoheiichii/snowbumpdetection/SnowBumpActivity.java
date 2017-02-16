@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,6 +81,16 @@ public class SnowBumpActivity extends FragmentActivity implements SensorEventLis
                 .addConnectionCallbacks(this) //コールバック
                 .addOnConnectionFailedListener(this) //コネ失敗リスナー
                 .build();
+
+        Button settingButton = (Button)findViewById(R.id.button_settings);
+        settingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplication(),SettingsActivity.class); //インテント
+                startActivity(intent); //切り替え
+            }
+        });
+
     }
 
     @Override

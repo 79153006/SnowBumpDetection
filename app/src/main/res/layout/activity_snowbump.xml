@@ -33,10 +33,17 @@
         android:layout_height="wrap_content"
         android:id="@+id/axisY" />
 
-    <TextView
+        <TextView
         android:text="Z"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/axisZ" />
+
+        <Button
+            android:text="@string/jp_button_settengs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_settings"
+            />
     </LinearLayout>
 </LinearLayout>

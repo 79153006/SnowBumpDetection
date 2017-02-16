@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="entries_list_naturalfreq">
+        <item>柔らかめ　　 0.80</item>
+        <item>柔らかめ　　 0.85</item>
+        <item>柔らかめ　　 0.90</item>
+        <item>柔らかめ　　 0.95</item>
+        <item>やや柔らかめ 1.00</item>
+        <item>やや柔らかめ 1.05</item>
+        <item>やや柔らかめ 1.10</item>
+        <item>やや柔らかめ 1.15</item>
+        <item>標準　　　　 1.20</item>
+        <item>標準　　　　 1.25</item>
+        <item>標準　　　　 1.30</item>
+        <item>標準　　　　 1.35</item>
+        <item>標準　　　　 1.40</item>
+        <item>標準　　　　 1.45</item>
+        <item>標準　　　　 1.50</item>
+        <item>標準　　　　 1.55</item>
+        <item>やや硬め　　 1.60</item>
+        <item>やや硬め　　 1.65</item>
+        <item>やや硬め　　 1.70</item>
+        <item>やや硬め　　 1.75</item>
+        <item>やや硬め　　 1.80</item>
+        <item>やや硬め　　 1.85</item>
+        <item>やや硬め　　 1.90</item>
+        <item>やや硬め　　 1.95</item>
+        <item>硬め　　　　 2.00</item>
+        <item>硬め　　　　 2.05</item>
+        <item>硬め　　　　 2.10</item>
+        <item>硬め　　　　 2.15</item>
+        <item>かなり硬め　 2.20</item>
+        <item>かなり硬め　 2.25</item>
+        <item>かなり硬め　 2.30</item>
+        <item>かなり硬め　 2.35</item>
+    </string-array>
+    <string-array name="values_list_naturalfreq">
+        <item>0.80</item>
+        <item>0.85</item>
+        <item>0.90</item>
+        <item>0.95</item>
+        <item>1.00</item>
+        <item>1.05</item>
+        <item>1.10</item>
+        <item>1.15</item>
+        <item>1.20</item>
+        <item>1.25</item>
+        <item>1.30</item>
+        <item>1.35</item>
+        <item>1.40</item>
+        <item>1.45</item>
+        <item>1.50</item>
+        <item>1.55</item>
+        <item>1.60</item>
+        <item>1.65</item>
+        <item>1.70</item>
+        <item>1.75</item>
+        <item>1.80</item>
+        <item>1.85</item>
+        <item>1.90</item>
+        <item>1.95</item>
+        <item>2.00</item>
+        <item>2.05</item>
+        <item>2.10</item>
+        <item>2.15</item>
+        <item>2.20</item>
+        <item>2.25</item>
+        <item>2.30</item>
+        <item>2.35</item>
+    </string-array>
+</resources>

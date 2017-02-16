@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">SnowBumpDetection</string>
 
+    <!--↓jaとjp（日本語の意味）を混同しちゃった...！-->
+
     <string name="jp_startfailed">アプリを開始できません</string>
     <string name="jp_dialog_geodeniedwarn">位置情報の取得が禁止されているため、アプリを開始できませんでした。</string>
     <string name="jp_dialog_geopermissionwarn">位置情報の取得が端末上で禁止されています。許可をするには設定-アプリ-SnowBumpDetectionから位置情報を許可してください。 </string>
@@ -8,5 +10,17 @@
     <string name="jp_button_changepermit">設定の変更（Android設定）</string>
     <string name="jp_message_infofretry">位置情報の取得を許可したら、再試行ボタンをタップしてください。</string>
     <string name="jp_button_retry">再試行</string>
+    <string name="jp_button_settengs">設定</string>
     <string name="jp_permissionchk">位置情報の利用が許可されていません。</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="ja_preference_title">設定</string>
+    <string name="ja_preference_account">アカウント管理</string>
+    <string name="ja_preference_userid">ユーザーID</string>
+    <string name="ja_preference_password">パスワード</string>
+    <string name="ja_preference_vehicle">車両設定</string>
+    <string name="ja_preference_naturalfreq">固有振動数</string>
+    <string name="ja_preference_naturalfreq_summary">サスペンションの固有振動数を設定します</string>
+
+
 </resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/ja_preference_account">
+        <EditTextPreference
+            android:key="userid_key"
+            android:title="@string/ja_preference_userid"
+            />
+        <EditTextPreference
+            android:key="password_key"
+            android:title="@string/ja_preference_password"
+            />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/ja_preference_vehicle">
+        <ListPreference
+            android:key="naturalreq_key"
+            android:title="@string/ja_preference_naturalfreq"
+            android:summary="@string/ja_preference_naturalfreq_summary"
+            android:entries="@array/entries_list_naturalfreq"
+            android:entryValues="@array/values_list_naturalfreq"
+            />
+    </PreferenceCategory>
+
+</PreferenceScreen>
